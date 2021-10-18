@@ -1,7 +1,8 @@
 <?php
 
+//use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PortfolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,17 +24,31 @@ use App\Http\Controllers\PortfolioController;
 //Este metodo sirve para retornar vistas con poca y nada de informacion, que no requieren logica. Es mejor por cuestiones de rendimiento.
 //Route::view('/','home', ['nombre'=>'Jorge']);
 Route::view('/','home')->name("home");
-Route::view('/about','about')->name("about");
-Route::view('/contact','contact')->name("contact");
-Route::view('/portfolio','portfolio',compact('portfolio'))->name("portfolio");
+Route::view('/quien-somos','about')->name("about");
+Route::view('/contacto','contact')->name("contact");
+//Route::view('/portfolio','portfolio',compact('portfolio'))->name("portfolio");
 //Route::get('/portfolio',PortfolioController::index)->name('portfolio');
 //Route::get('projects','App\Http\Controllers\PortfolioController@index');
-Route::resource('projects','App\Http\Controllers\PortfolioController');
+
+//Route::get('/portfolio','App\Http\Controllers\PortfolioController@index')->name('portfolio.index');
+//Route::get('/portfolio/{id}','App\Http\Controllers\PortfolioController@show')->name('portfolio.show');
+
+Route::get('/portfolio','App\Http\Controllers\ProjectController@index')->name('projects.index');
+Route::get('/portfolio/crear','App\Http\Controllers\ProjectController@create')->name('projects.create');
+
+Route::get('/portfolio/{project}/editar','App\Http\Controllers\ProjectController@edit')->name('projects.edit');
+Route::patch('/portfolio/{project}','App\Http\Controllers\ProjectController@update')->name('projects.update');
+
+Route::post('/portfolio','App\Http\Controllers\ProjectController@store')->name('projects.store');
+Route::get('/portfolio/{project}','App\Http\Controllers\ProjectController@show')->name('projects.show');
+
+//Route::resource('portfolio','App\Http\Controllers\PortfolioController');
 //Route::resource('projects','App\Http\Controllers\PortfolioController')->only(['index','show']);
 //Route::resource('projects','App\Http\Controllers\PortfolioController')->except(['index','show']);
 //Route::apiResource('proyectos','App\Http\Controllers\PortfolioController');
 
-Route::post('contact','App\Http\Controllers\MessagesController@store');
+//Route::post('contact','App\Http\Controllers\MessagesController@store');
+Route::post('contact','App\Http\Controllers\MessageController@store')->name('messages.store');
 
 /*Route::get('/', function () {
     //return view('welcome');

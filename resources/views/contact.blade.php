@@ -8,7 +8,7 @@
 		@endforeach
 
 	@endif --}}
-	<form method="post" action="{{route('contact')}}">
+	<form method="post" action="{{route('messages.store')}}">
 		@csrf
 		<input type="text" name="name" placeholder="Nombre" value="{{ old('name') }}" ><br>
 		{!! $errors->first('name','<small>:message</small><br>') !!}

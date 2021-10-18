@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\DB;
 
-class PortfolioController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the proyecto.
@@ -13,14 +15,18 @@ class PortfolioController extends Controller
      */
     public function index()
     {
+        //$portfolio = DB::table('projects')->get();
+        //$portfolio = Project::orderBy('created_at','DESC')->get();
+        //$portfolio = Project::latest('created_at')->get(); //por defecto usa el campo created_at
+        $projects = Project::latest('created_at')->paginate(); //por defecto usa el campo created_at
 
-	$portfolio = [
+	/*$portfolio = [
 		['title'    => 'Proyecto #1'],
 		['title'    => 'Proyecto #2'],
 		['title'    => 'Proyecto #3'],
 		['title'    => 'Proyecto #4'],
-	];
-	return view('portfolio',compact('portfolio'));
+	];*/
+	return view('projects.index',compact('projects'));
     }
 
     /**
@@ -52,7 +58,9 @@ class PortfolioController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('projects.show',[
+            'project'   => Project::findOrFail($id),
+        ]);
     }
 
     /**
